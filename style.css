@@ -1,4 +1,5 @@
 /*==== RESET ====================================== */
+
 * {
   margin: 0;
   padding: 0;
@@ -15,6 +16,7 @@ img {
 }
 
 /*==== VARIABLES ================================== */
+
 :root {
   --header-height: 4.5rem;
   /* Colors */
@@ -30,6 +32,7 @@ img {
 }
 
 /*==== BASE ======================================= */
+
 body {
   font: 400 1rem 'DM Sans', sans-serif;
   color: var(--text-color);
@@ -37,7 +40,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1 {
+.title {
   font: 700 1.875rem 'Poppins', sans-serif;
   color: var(--title-color);
   -webkit-font-smoothing: auto;
@@ -64,11 +67,12 @@ h1 {
   background: linear-gradient(
     270deg,
     hsla(var(--hue), 36%, 57%, 1) 0%,
-    hsla(var(--hue), 65%¨, 88%, 0.34)
+    hsla(var(--hue), 65%, 88%, 0.34) 100% 
   );
 }
 
 /*==== LAYOUT ===================================== */
+
 .container {
   margin-left: 1.5rem;
   margin-right: 1.5rem;
@@ -95,13 +99,11 @@ h1 {
   background-color: var(--body-color);
 }
 
-nav {
-  height: var(--header-height);
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+main {
+  margin-top: calc(var(--header-height) + 2rem);
 }
+
+/*==== LOGO ======================================= */
 
 .logo {
   font: 700 1.31rem 'Poppins', sans-serif;
@@ -112,11 +114,46 @@ nav {
   color: var(--base-color);
 }
 
-main {
-  margin-top: var(--header-height);
+/*==== NAVIGATION ================================= */
+
+nav {
+  height: var(--header-height);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
+nav ul li {
+  text-align: center;
+}
+
+nav .menu {
+  visibility: hidden;
+}
+
+/* Open menu */
+
+nav.show .menu {
+  visibility: visible;
+  background-color: var(--body-color);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+nav.show ul.grid {
+  gap: 4rem;
+}
+
+/* Close menu */
+
+
+
 /*==== HOME ======================================= */
+
 #home {
   overflow: hidden;
 }
