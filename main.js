@@ -9,11 +9,13 @@ for (const element of toggle) {
   })
 }
 
+/* Removing the pop-up menu when clicking on a link */
+
 const links = document.querySelectorAll('nav ul li a')
 
 for (const link of links) {
   link.addEventListener('click', function () {
-    nav.classList.toggle('show')
+    nav.classList.remove('show')
   })
 }
 
@@ -22,15 +24,16 @@ for (const link of links) {
 const header = document.querySelector('#header')
 const navHeight = header.offsetHeight
 
-window.addEventListener('scroll', function() {
-  if(window.scrollY >= navHeight) {
+function changeHeaderWhenScroll() {
+  if (window.scrollY >= navHeight) {
     header.classList.add('scroll')
   } else {
     header.classList.remove('scroll')
   }
-})
+}
 
 /* Initializing Swiper for testimonials carousel */
+
 const swiper = new Swiper('.swiper-container', {
   slidesPerView: 1,
   pagination: {
@@ -38,10 +41,15 @@ const swiper = new Swiper('.swiper-container', {
   },
   mousewheel: true,
   keyboard: true,
+  breakpoints: {
+    767: {
+      slidesPerView: 2,
+      setWrapperSize: true
+    }
+  }
+})
 
-});
-
-/* ScrollReveal */
+/* ScrollReveal for revealing content smoothly */
 
 const scrollReveal = ScrollReveal({
   origin: 'top',
@@ -56,7 +64,55 @@ scrollReveal.reveal(
   #about .image, #about .text,
   #services header, #services .card,
   #testimonials header, #testimonials .testimonials,
-  #contact .text, #contact .links
-  `, 
+  #contact .text, #contact .links,
+  footer .brand, footer .social
+  `,
   { interval: 100 }
 )
+
+/* Back to the top button - takes the user back to the home section */
+
+const backToTopButton = document.querySelector('.back-to-top')
+
+function backToTop() {
+  if (window.scrollY >= 560) {
+    backToTopButton.classList.add('show')
+  } else {
+    backToTopButton.classList.remove('show')
+  }
+}
+
+/* Active menu when the user is in the current section */
+
+const sections = document.querySelectorAll('main section[id]')
+
+function activateMenuAtCurrentSection() {
+  const checkpoint = window.pageYOffset + (window.innerHeight / 8) * 4
+
+  for (const section of sections) {
+    const sectionTop = section.offsetTop
+    const sectionHeight = section.offsetHeight
+    const sectionId = section.getAttribute('id')
+
+    const checkpointStart = checkpoint >= sectionTop
+    const checkpointEnd = checkpoint <= sectionTop + sectionHeight
+
+    if (checkpointStart && checkpointEnd) {
+      document
+        .querySelector('nav ul li a[href*=' + sectionId + ']')
+        .classList.add('active')
+    } else {
+      document
+        .querySelector('nav ul li a[href*=' + sectionId + ']')
+        .classList.remove('active')
+    }
+  }
+}
+
+/* When scrolling the page */
+
+window.addEventListener('scroll', function () {
+  changeHeaderWhenScroll()
+  backToTop()
+  activateMenuAtCurrentSection()
+})
